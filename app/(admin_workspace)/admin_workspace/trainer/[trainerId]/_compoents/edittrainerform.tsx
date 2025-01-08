@@ -32,13 +32,7 @@ export default function Edittrainerform({ response }: Props) {
   const [cv, setCv] = useState<string | null>(formateur?.cv!);
   const [error, setError] = useState<string | null>("");
   const [succes, setSucces] = useState<string | undefined>("");
-  if (response.error) {
-    return null;
-  }
   
-  if (!formateur) {
-    return null;
-  }
 
   const handelImageChange = (url: string) => {
     setImage(url);
@@ -62,7 +56,7 @@ export default function Edittrainerform({ response }: Props) {
     form.setValue("specialty", specialties);
 
     startTransition(() => {
-      updateFormateur(data, formateur.id).then((result) => {
+      updateFormateur(data, formateur?.id!).then((result) => {
         setError(result?.error);
         setSucces(result?.success);
       });
@@ -73,14 +67,14 @@ export default function Edittrainerform({ response }: Props) {
   const form = useForm<z.infer<typeof UpdateFormateur>>({
     resolver: zodResolver(UpdateFormateur),
     defaultValues: {
-      firstname: formateur.name,
-      lastname: formateur.lastName,
+      firstname: formateur?.name,
+      lastname: formateur?.lastName,
 
-      phoneNumber: formateur.number!,
-      cinNumber: formateur.cinNumber!,
+      phoneNumber: formateur?.number!,
+      cinNumber: formateur?.cinNumber!,
 
       role: "STUDENT",
-      specialty: formateur.specialty,
+      specialty: formateur?.specialty,
     },
   });
 
@@ -136,7 +130,7 @@ export default function Edittrainerform({ response }: Props) {
               />
               <div className="space-y-2">
                 <Label>Email</Label>
-                <Input type="email" value={formateur.email} disabled />
+                <Input type="email" value={formateur?.email} disabled />
               </div>
 
               <FormField
