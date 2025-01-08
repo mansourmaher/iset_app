@@ -1,5 +1,4 @@
 "use client";
-import { createpurchase } from "@/actions/courseuser/courseuser";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -13,14 +12,7 @@ function Button({ courseId }: ButtonProps) {
   const router = useRouter();
 
   const handelPurchasecourse = async () => {
-    const result = await createpurchase(courseId);
-    if (result?.suscce) {
-      toast.success(result.suscce);
-      router.refresh()
-    } else if (result?.error) {
-      toast.error(result.error);
-      router.refresh()
-    }
+    
   };
   return (
     <button
