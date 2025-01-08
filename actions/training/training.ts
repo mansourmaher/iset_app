@@ -182,3 +182,47 @@ export async function updatetraining(data:z.infer<typeof FormationSchema>,id:str
 
 }
 
+export async function deletetraining(id:string){
+    const user=await auth()
+    if(!user){
+        return {error:"User not found"}
+    }
+    if(user.user.role!=="ADMIN"){
+        return {error:"You are not authorized to perform this action"}
+    }
+    const trainingExist=await db.training.findFirst({
+        where:{
+            id
+        }
+    })
+    await db.application.deleteMany({
+        where:{
+            session:{
+                trainingId:id
+            }
+        }
+    })
+    await db.sessionOnUser.deleteMany({
+        where:{
+            session:{
+                trainingId:id
+            }
+        }
+    })
+    await db.session.deleteMany({
+        where:{
+            trainingId:id
+        }
+    })
+    
+    if(!trainingExist){
+        return {error:"Training not found"}
+    }
+    const training=await db.training.delete({
+        where:{
+            id
+        }
+    })
+    return {success:"Training deleted successfully",training:training}
+}
+

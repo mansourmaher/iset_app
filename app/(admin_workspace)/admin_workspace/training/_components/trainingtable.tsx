@@ -25,6 +25,7 @@ import {
 import { File, PlusCircle, Recycle, Router, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import DeleteTraining from "./deletesession";
 
 export type Course = {
   id: string;
@@ -113,16 +114,7 @@ export const columns: ColumnDef<Course>[] = [
             <span>Edit</span>
           </Button>
         </Link>
-
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={() => handleDelete(row.original.id)}
-          className="flex items-center space-x-2"
-        >
-          <Trash className="h-4 w-4 " />
-          <span>Delete</span>
-        </Button>
+        <DeleteTraining id={row.original.id} />
       </div>
     ),
   },

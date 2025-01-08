@@ -256,3 +256,36 @@ export async function updatesession(data:z.infer<typeof SessionSchema>,sessionId
     }
     return {success:"Session updated successfully"}
 }
+
+export async function getSessionApplication(){
+    const user=await auth()
+    if(!user)
+    {
+        return {error:"User not found"}
+    }
+    if(user.user.role!=="ADMIN")
+    {
+        return {error:"You are not allowed to access this page"}
+    }
+    const session=await db.session.findMany({
+        select:{
+            id:true,
+            title:true,
+           
+        }
+    })
+    if(!session)
+    {
+        return {error:"Session not found"}
+    }
+    const arraysessionwithapplength= []
+    for (const sess of session) {
+        const applicationlength=await db.application.count({
+            where:{
+                sessionId:sess.id
+            }
+        })
+        arraysessionwithapplength.push({...sess,applicationlength})
+    }
+    return {sessions:arraysessionwithapplength}
+}
