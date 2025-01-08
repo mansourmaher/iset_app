@@ -53,25 +53,25 @@ interface Props {
 }
 
 export default function Edittraining({ training }: Props) {
-  if (!training) return <div>loading...</div>;
+  
 
-  const [prg, setPrg] = useState<string | undefined>(training.program);
+  const [prg, setPrg] = useState<string | undefined>(training?.program);
   const [error, setError] = useState<string | undefined>("");
   const [succes, setSucces] = useState<string | undefined>("");
   const [image, setImage] = useState<string | undefined>(
-    training.image as string
+    training?.image as string
   );
   const form = useForm<z.infer<typeof FormationSchema>>({
     resolver: zodResolver(FormationSchema),
     defaultValues: {
-      title: training.title,
-      description: training.description,
-      duration: training.duration,
-      image: training.image as string,
-      program: training.program,
-      difficulty: training.difficulty,
-      tags: training.tags,
-      categories: training.category,
+      title: training?.title,
+      description: training?.description,
+      duration: training?.duration,
+      image: training?.image as string,
+      program: training?.program,
+      difficulty: training?.difficulty,
+      tags: training?.tags,
+      categories: training?.category,
     },
   });
 
@@ -99,7 +99,7 @@ export default function Edittraining({ training }: Props) {
     setError("");
     setSucces("");
     startTransition(() => {
-      updatetraining(values, training.id).then((result) => {
+      updatetraining(values, training?.id!).then((result) => {
         setError(result?.error);
         setSucces(result?.success);
       });

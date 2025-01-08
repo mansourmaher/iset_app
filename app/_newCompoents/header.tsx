@@ -43,8 +43,8 @@ export function Header({ user }: userProps) {
 
               {!user && (
                 <>
-                  <NavLink href="/espace_condidat">Applicants' Area</NavLink>
-                  <NavLink href="/espace_trainer">Trainers' area</NavLink>
+                  <NavLink href="/espace_condidat">Applicants Area</NavLink>
+                  <NavLink href="/espace_trainer">Trainers area</NavLink>
                 </>
               )}
               {user && user.user.role == "FORMATEUR" && (

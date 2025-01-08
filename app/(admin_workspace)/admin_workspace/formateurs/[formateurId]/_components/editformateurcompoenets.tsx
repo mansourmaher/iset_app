@@ -30,16 +30,12 @@ interface Props {
 }
 
 export default function EditFormateurForm({ formateurr }: Props) {
-  if (formateurr.error) {
-    return null;
-  }
+ 
   const formateur = formateurr.user;
-  if (!formateur) {
-    return null;
-  }
-  const [specialties, setSpecialties] = useState<string[]>(formateur.specialty);
-  const [image, setImage] = useState<string | null>(formateur.photo);
-  const [cv, setCv] = useState<string | null>(formateur.cv);
+  
+  const [specialties, setSpecialties] = useState<string[] |undefined>(formateur?.specialty);
+  const [image, setImage] = useState<string | null |undefined>(formateur?.photo);
+  const [cv, setCv] = useState<string | null |undefined>(formateur?.cv);
   const [error, setError] = useState<string | null>("");
   const [succes, setSucces] = useState<string | undefined>("");
 
@@ -65,7 +61,7 @@ export default function EditFormateurForm({ formateurr }: Props) {
     form.setValue("specialty", specialties);
 
     startTransition(() => {
-      updateFormateur(data, formateur.id).then((result) => {
+      updateFormateur(data, formateur?.id!).then((result) => {
         setError(result?.error);
         setSucces(result?.success);
       });
@@ -76,14 +72,14 @@ export default function EditFormateurForm({ formateurr }: Props) {
   const form = useForm<z.infer<typeof UpdateFormateur>>({
     resolver: zodResolver(UpdateFormateur),
     defaultValues: {
-      firstname: formateur.name,
-      lastname: formateur.lastName,
+      firstname: formateur?.name,
+      lastname: formateur?.lastName,
 
-      phoneNumber: formateur.number!,
-      cinNumber: formateur.cinNumber!,
+      phoneNumber: formateur?.number!,
+      cinNumber: formateur?.cinNumber!,
 
       role: "FORMATEUR",
-      specialty: formateur.specialty,
+      specialty: formateur?.specialty,
     },
   });
 
@@ -92,7 +88,7 @@ export default function EditFormateurForm({ formateurr }: Props) {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    const newspec = specialties.filter((s) => s !== spec);
+    const newspec = specialties?.filter((s) => s !== spec);
     setSpecialties(newspec);
   };
 
@@ -139,7 +135,7 @@ export default function EditFormateurForm({ formateurr }: Props) {
               />
               <div className="space-y-2">
                 <Label>Email</Label>
-                <Input type="email" value={formateur.email} disabled />
+                <Input type="email" value={formateur?.email} disabled />
               </div>
 
               <FormField
@@ -182,13 +178,13 @@ export default function EditFormateurForm({ formateurr }: Props) {
 
                 <FormControl>
                   <Input
-                    value={specialties.join(", ")}
+                    value={specialties?.join(", ")}
                     onChange={handleSpecialtyChange}
                     placeholder="Enter specialties"
                   />
                 </FormControl>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {specialties.map((tag) => (
+                  {specialties?.map((tag) => (
                     <Badge key={tag} variant="secondary">
                       {tag}
                       <Button
