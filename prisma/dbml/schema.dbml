@@ -1,0 +1,107 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id String [pk]
+  name String [not null]
+  lastName String [not null]
+  email String [unique, not null]
+  number String
+  cinNumber String
+  photo String
+  cv String
+  specialty String[] [not null]
+  password String [not null]
+  role UserRole [not null]
+  active Boolean [not null, default: true]
+  Session SessionOnUser [not null]
+  Application Application [not null]
+}
+
+Table Training {
+  id String [pk]
+  title String [not null]
+  description String [not null]
+  program String [not null]
+  duration String [not null]
+  difficulty String [not null]
+  image String
+  tags String[] [not null]
+  category String[] [not null]
+  Session Session [not null]
+}
+
+Table Session {
+  id String [pk]
+  title String [not null]
+  description String [not null]
+  startDate DateTime [not null]
+  endDate DateTime [not null]
+  trainingId String [not null]
+  training Training [not null]
+  formateurs SessionOnUser [not null]
+  Application Application [not null]
+}
+
+Table SessionOnUser {
+  id String [pk]
+  sessionId String [not null]
+  userId String [not null]
+  session Session [not null]
+  user User [not null]
+  status String [not null, default: 'pending']
+
+  indexes {
+    (sessionId, userId) [unique]
+  }
+}
+
+Table Application {
+  id String [pk]
+  userId String [not null]
+  sessionId String [not null]
+  status String [not null, default: 'pending']
+  user User [not null]
+  session Session [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table VerificationToken {
+  id String [pk]
+  email String [not null]
+  token String [not null]
+  expires DateTime [not null]
+
+  indexes {
+    (email, token) [unique]
+  }
+}
+
+Table PasswordResetToken {
+  id String [pk]
+  email String [not null]
+  token String [not null]
+  expires DateTime [not null]
+
+  indexes {
+    (email, token) [unique]
+  }
+}
+
+Enum UserRole {
+  STUDENT
+  ADMIN
+  FORMATEUR
+}
+
+Ref: Session.trainingId > Training.id
+
+Ref: SessionOnUser.sessionId > Session.id
+
+Ref: SessionOnUser.userId > User.id
+
+Ref: Application.userId > User.id
+
+Ref: Application.sessionId > Session.id

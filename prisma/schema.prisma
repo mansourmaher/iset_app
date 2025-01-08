@@ -1,0 +1,229 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider     = "cockroachdb"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+// model Account {
+//   id                String  @id @default(cuid())
+//   userId            String
+//   type              String
+//   provider          String
+//   providerAccountId String
+//   refresh_token     String?
+//   access_token      String?
+//   expires_at        Int?
+//   token_type        String?
+//   scope             String?
+//   id_token          String?
+//   session_state     String?
+
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@unique([provider, providerAccountId])
+// }
+
+enum UserRole {
+  STUDENT
+  ADMIN
+  FORMATEUR
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  lastName  String
+  email     String   @unique
+  number    String?
+  cinNumber String?
+  photo     String?
+  cv        String?
+  specialty String[]
+  password  String
+  role      UserRole
+  active    Boolean  @default(true)
+
+  Session SessionOnUser[]
+
+  Application Application[]
+}
+
+model Training {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  program     String
+  duration    String
+  difficulty  String
+  image       String?
+  tags        String[]
+  category    String[]
+
+  Session Session[]
+}
+
+model Session {
+  id          String          @id @default(cuid())
+  title       String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+  trainingId  String
+  training    Training        @relation(fields: [trainingId], references: [id])
+  formateurs  SessionOnUser[]
+
+  Application Application[]
+}
+
+model SessionOnUser {
+  id        String @id @default(cuid())
+  sessionId String
+  userId    String
+
+  session Session @relation(fields: [sessionId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  status  String  @default("pending")
+
+  @@unique([sessionId, userId])
+}
+
+model Application {
+  id        String   @id @default(cuid())
+  userId    String
+  sessionId String
+  status    String   @default("pending")
+  user      User     @relation(fields: [userId], references: [id])
+  session   Session  @relation(fields: [sessionId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+// model course {
+//   id          String    @id @default(cuid())
+//   title       String
+//   description String
+//   image       String
+//   chapters    Chapter[]
+//   skills      String[]
+//   price       Float
+//   category    String?
+//   level       String?
+//   certificate Boolean   @default(false)
+//   status      String    @default("draft")
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   courseUserId CourseUser[]
+
+//   createdById String
+//   createdBy   User   @relation(fields: [createdById], references: [id])
+// }
+
+// model Lesson {
+//   id          String     @id @default(cuid())
+//   title       String
+//   description String?
+//   video       String?
+//   assignments String[]
+//   resources   Resource[]
+//   private     Boolean    @default(false)
+//   status      String     @default("draft")
+//   courseId    String
+//   chapterId   String
+//   chapter     Chapter    @relation(fields: [chapterId], references: [id])
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   Quiz      Quiz[]
+// }
+
+// model Resource {
+//   id            String   @id @default(cuid())
+//   url           String
+//   title         String
+//   descreption   String?
+//   estimatedTime Float?
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+//   Lesson        Lesson?  @relation(fields: [lessonId], references: [id])
+//   lessonId      String?
+// }
+
+// model Chapter {
+//   id        String   @id @default(uuid())
+//   title     String
+//   courseId  String
+//   course    course   @relation(fields: [courseId], references: [id])
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   lessons   Lesson[]
+
+//   @@index([courseId], name: "courseId")
+// }
+
+// model Quiz {
+//   id       String @id @default(uuid())
+//   question String
+//   answer   String
+
+//   createdAt DateTime @default(now())
+
+//   options  Options[]
+//   lessonId String
+//   lesson   Lesson    @relation(fields: [lessonId], references: [id])
+
+//   //
+// }
+
+// model Options {
+//   id            String   @id @default(uuid())
+//   options       String[]
+//   correctOption String
+//   quizId        String
+//   quiz          Quiz     @relation(fields: [quizId], references: [id])
+
+//   @@index([quizId], name: "quizId")
+// }
+
+// model CourseUser {
+//   id        String   @id @default(uuid())
+//   userId    String
+//   user      User?    @relation(fields: [userId], references: [id])
+//   courseId  String
+//   course    course   @relation(fields: [courseId], references: [id])
+//   createdAt DateTime @default(now())
+// }
