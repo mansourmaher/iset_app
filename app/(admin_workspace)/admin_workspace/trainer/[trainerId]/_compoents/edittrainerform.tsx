@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { RegisterSchema, UpdateFormateur } from "@/app/schemas";
+import { UpdateFormateur } from "@/app/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -16,17 +16,9 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent } from "@/components/ui/card";
 import UploadImageForRegistartion from "@/app/(auth)/sign-up/_components/uplaodImage";
-import UploadCvForRegistartion from "@/app/(auth)/sign-up/_components/uploadcv";
 import { FormError } from "@/app/(auth)/login/_compoenets/Form-error";
 import { FormSucces } from "@/app/(auth)/login/_compoenets/Form-succes";
-import { register } from "@/actions/auth/register";
-import {
-  getFormateur,
-  getTrainer,
-  updateFormateur,
-} from "@/actions/trainer/trainer";
-import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+import { getTrainer, updateFormateur } from "@/actions/trainer/trainer";
 import { Label } from "@/components/ui/label";
 
 interface Props {
@@ -34,18 +26,19 @@ interface Props {
 }
 
 export default function Edittrainerform({ response }: Props) {
+  const formateur = response.user;
+  const [specialties, setSpecialties] = useState<string[]>(formateur?.specialty!);
+  const [image, setImage] = useState<string | null>(formateur?.photo!);
+  const [cv, setCv] = useState<string | null>(formateur?.cv!);
+  const [error, setError] = useState<string | null>("");
+  const [succes, setSucces] = useState<string | undefined>("");
   if (response.error) {
     return null;
   }
-  const formateur = response.user;
+  
   if (!formateur) {
     return null;
   }
-  const [specialties, setSpecialties] = useState<string[]>(formateur.specialty);
-  const [image, setImage] = useState<string | null>(formateur.photo);
-  const [cv, setCv] = useState<string | null>(formateur.cv);
-  const [error, setError] = useState<string | null>("");
-  const [succes, setSucces] = useState<string | undefined>("");
 
   const handelImageChange = (url: string) => {
     setImage(url);
