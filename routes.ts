@@ -7,7 +7,7 @@ export const publicRoutes = [
     "/explore",
     "/learn",
     "/course",
-    "trainings"
+    "/espace_condidat/trainings"
     
 
     

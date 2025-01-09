@@ -24,6 +24,7 @@ import { addNewApplication } from "@/actions/session/session";
 import { FormError } from "@/app/(auth)/login/_compoenets/Form-error";
 import { FormSucces } from "@/app/(auth)/login/_compoenets/Form-succes";
 import Planingsession from "../[trainingId]/_compoenets/planning";
+import { File } from "lucide-react";
 
 // type Trainer = {
 //   id: string;
@@ -110,11 +111,20 @@ export default function TrainingSessionDisplay({ training }: Props) {
                   />
                 </div>
               )}
-              <p>
-                <strong>Program:</strong> {training?.program}
+              <p className="flex space-x-2">
+                <strong>Program:</strong>
+                <a
+                  href={training?.program}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex space-x-2 items-center"
+                >
+                  <File className="w-6 h-6" />
+                </a>
               </p>
               <p>
                 <strong>Duration:</strong> {training?.duration}
+                <span className="text-sm text-gray-500">{" "} (hours)</span>
               </p>
               <p>
                 <strong>Difficulty:</strong> {training?.difficulty}
