@@ -6,7 +6,7 @@ const page = async ({ params }: { params: { sesId: string } }) => {
   const planing = await getPlaning(params.sesId);
 
   return (
-    <div className="mt-2 overflow-y-auto h-screen">
+    <div className="mt-4 overflow-y-auto h-screen">
       <Planning sessionId={params.sesId} inititalPlaning={planing} />
     </div>
   );

@@ -34,7 +34,7 @@ function Planingsession({ inititalPlaning }: Props) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sessionEntries.map((entry: any) => (
+              {sessionEntries?.map((entry: any) => (
                 <TableRow key={entry.id}>
                   <TableCell>{format(entry.date, "PPP")}</TableCell>
                   <TableCell>{entry.startDatetime}</TableCell>

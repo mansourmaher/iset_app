@@ -22,7 +22,6 @@ import {
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { PlanningSchema } from "@/app/schemas";
@@ -35,7 +34,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { addPlanning, getPlaning } from "@/actions/palnning/planning";
+import {
+  addPlanning,
+  deletePlaning,
+  getPlaning,
+} from "@/actions/palnning/planning";
 
 interface SessionEntry {
   id: number;
@@ -67,6 +70,11 @@ export default function Planning({ sessionId, inititalPlaning }: Props) {
       descreption: "",
     },
   });
+
+  const handeldeletePlan = async (id: string) => {
+    await deletePlaning(id);
+    window.location.reload();
+  };
 
   const handleAddSession = async (data: z.infer<typeof PlanningSchema>) => {
     setError("");
@@ -118,7 +126,12 @@ export default function Planning({ sessionId, inititalPlaning }: Props) {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Button variant={"destructive"}>Delete</Button>
+                    <Button
+                      variant={"destructive"}
+                      onClick={() => handeldeletePlan(entry.id)}
+                    >
+                      Delete
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

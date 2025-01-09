@@ -216,7 +216,7 @@ export default function TrainingSessionDisplay({ training }: Props) {
         </Card>
       </div>
       {/* @ts-ignore */}
-      <Planingsession inititalPlaning={selectedSession.SessionPlaning} />
+      <Planingsession inititalPlaning={selectedSession?.SessionPlaning} />
     </div>
   );
 }

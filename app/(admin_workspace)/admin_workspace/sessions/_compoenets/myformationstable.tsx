@@ -72,13 +72,8 @@ export const columns: ColumnDef<SessionData>[] = [
     header: "Actions",
     cell: ({ row }) => (
       <div className="flex space-x-6 items-center">
-        <Link href={`/admin_workspace/sessions/${row.getValue('id')}/planning`}>
-          <Button
-            variant={"outline"}
-            size="sm"
-            onClick={() => handelDelete(row.getValue("id"))}
-            className="space-x-2"
-          >
+        <Link href={`/admin_workspace/sessions/${row.getValue("id")}/planning`}>
+          <Button variant={"outline"} size="sm" className="space-x-2">
             <TableCellsSplit className="w-4 h-4" />
             <span>Planning</span>
           </Button>

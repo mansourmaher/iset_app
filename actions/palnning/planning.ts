@@ -46,3 +46,21 @@ export async function getPlaning(sessionid:string){
     })
     return {planning}
 }
+export async function deletePlaning(id:string){
+    const user=await auth()
+    if(!user){
+        return {error:"You must be authenticated"}
+    }
+    if(user.user.role!=="ADMIN")
+    {
+        return {error:"You must be authenticated"}
+    }
+    const planning=await db.sessionPlaning.delete({
+        where:{
+            id
+        }
+    })
+    if(planning){
+        return {success:"Planing deleted successfully"}
+    }
+}
