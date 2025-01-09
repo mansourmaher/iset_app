@@ -23,6 +23,7 @@ import { Session } from "@prisma/client";
 import { addNewApplication } from "@/actions/session/session";
 import { FormError } from "@/app/(auth)/login/_compoenets/Form-error";
 import { FormSucces } from "@/app/(auth)/login/_compoenets/Form-succes";
+import Planingsession from "../[trainingId]/_compoenets/planning";
 
 // type Trainer = {
 //   id: string;
@@ -214,6 +215,8 @@ export default function TrainingSessionDisplay({ training }: Props) {
           </div>
         </Card>
       </div>
+      {/* @ts-ignore */}
+      <Planingsession inititalPlaning={selectedSession.SessionPlaning} />
     </div>
   );
 }

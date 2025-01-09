@@ -26,6 +26,7 @@ import {
 import { Check, Eye, Trash } from "lucide-react";
 import SessionTrainingDialog from "./sessionmodal";
 import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
 
 export type SessionData = {
   id: string;
@@ -50,14 +51,14 @@ export const columns: ColumnDef<SessionData>[] = [
     accessorKey: "startDate",
     header: "Start Date",
     cell: ({ row }) => (
-      <div>{new Date(row.getValue("startDate")).toLocaleDateString()}</div>
+      <div>{format(new Date(row.getValue("startDate")), "PPP")}</div>
     ),
   },
   {
     accessorKey: "endDate",
     header: "End Date",
     cell: ({ row }) => (
-      <div>{new Date(row.getValue("endDate")).toLocaleDateString()}</div>
+      <div>{format(new Date(row.getValue("endDate")), "PPP")}</div>
     ),
   },
   {

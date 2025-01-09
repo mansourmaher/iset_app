@@ -93,6 +93,16 @@ export async function handelDeletesession(sessionId:string)
                 sessionId
             }
         })
+        await db.application.deleteMany({
+            where:{
+                sessionId
+            }
+        })
+        await db.sessionPlaning.deleteMany({
+            where:{
+                sessionId
+            }
+        })
         await db.session.delete({
             where:{
                 id:sessionId

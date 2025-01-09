@@ -42,6 +42,7 @@ Table Session {
   training Training [not null]
   formateurs SessionOnUser [not null]
   Application Application [not null]
+  SessionPlaning SessionPlaning [not null]
 }
 
 Table SessionOnUser {
@@ -68,26 +69,14 @@ Table Application {
   updatedAt DateTime [not null]
 }
 
-Table VerificationToken {
+Table SessionPlaning {
   id String [pk]
-  email String [not null]
-  token String [not null]
-  expires DateTime [not null]
-
-  indexes {
-    (email, token) [unique]
-  }
-}
-
-Table PasswordResetToken {
-  id String [pk]
-  email String [not null]
-  token String [not null]
-  expires DateTime [not null]
-
-  indexes {
-    (email, token) [unique]
-  }
+  date DateTime [not null]
+  startDatetime String [not null]
+  endDatetime String [not null]
+  description String [not null]
+  sessionId String [not null]
+  session Session [not null]
 }
 
 Enum UserRole {
@@ -105,3 +94,5 @@ Ref: SessionOnUser.userId > User.id
 Ref: Application.userId > User.id
 
 Ref: Application.sessionId > Session.id
+
+Ref: SessionPlaning.sessionId > Session.id

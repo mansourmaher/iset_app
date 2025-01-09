@@ -127,11 +127,15 @@ export async function getSpecificTraing(id:string){
                     trainingId:id
                 },
                 include:{
+                    
                     formateurs:{
                         include:{
                             user:true
                         }
-                    }
+                    },
+                    SessionPlaning:true
+                    
+                
                 }
             }
         }

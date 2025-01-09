@@ -110,6 +110,21 @@ export const  SessionSchema=z.object({
     message:"Please select a training"
   })
 })
+export const PlanningSchema=z.object({
+  date:z.string().min(1,{
+    message:"Please enter a valid date"
+  }),
+  startDatetime:z.string().min(1,{
+    message:"Please enter a valid date"
+  }),
+  endDatetime:z.string().min(1,{
+    message:"Please enter a valid date"
+  }),
+  descreption:z.string().min(1,{
+    message:"Description must be at least 1 character long"
+  }),
+})
+
 
 // model Session{
 //   id String @id @default(cuid())

@@ -23,11 +23,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, Recycle, Trash } from "lucide-react";
+import { Eye, PlusCircle, Recycle, TableCellsSplit, Trash } from "lucide-react";
 import SessionTrainingDialog from "@/app/(espace_trainer)/_compoenets/sessionmodal";
 import { handelDeletesession } from "@/actions/session/session";
 import Deletesession from "./deletesession";
 import Link from "next/link";
+import { format } from "date-fns";
 
 export type SessionData = {
   id: string;
@@ -55,14 +56,14 @@ export const columns: ColumnDef<SessionData>[] = [
     accessorKey: "startDate",
     header: "Start Date",
     cell: ({ row }) => (
-      <div>{new Date(row.getValue("startDate")).toLocaleDateString()}</div>
+      <div>{format(new Date(row.getValue("startDate")), "PPP")}</div>
     ),
   },
   {
     accessorKey: "endDate",
     header: "End Date",
     cell: ({ row }) => (
-      <div>{new Date(row.getValue("endDate")).toLocaleDateString()}</div>
+      <div>{format(new Date(row.getValue("endDate")), "PPP")}</div>
     ),
   },
 
@@ -71,6 +72,18 @@ export const columns: ColumnDef<SessionData>[] = [
     header: "Actions",
     cell: ({ row }) => (
       <div className="flex space-x-6 items-center">
+        <Link href={`/admin_workspace/sessions/${row.getValue('id')}/planning`}>
+          <Button
+            variant={"outline"}
+            size="sm"
+            onClick={() => handelDelete(row.getValue("id"))}
+            className="space-x-2"
+          >
+            <TableCellsSplit className="w-4 h-4" />
+            <span>Planning</span>
+          </Button>
+        </Link>
+
         <SessionTrainingDialog id={row.getValue("id")} />
         <Link href={`/admin_workspace/sessions/${row.getValue("id")}`}>
           <Button variant="green" className="space-x-2" size="sm">
