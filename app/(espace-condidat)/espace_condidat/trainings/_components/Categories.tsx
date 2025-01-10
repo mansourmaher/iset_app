@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IconType } from "react-icons";
 import qs from "query-string";
 import IconComponent from "./icon-components";
+import { TagIcon } from "lucide-react";
 
 interface Props {
   tags: string[];
@@ -60,7 +61,7 @@ function Categories({ tags }: Props) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div>
         <p className="text-lg font-semibold ">Explore by Categories</p>
         <span className="flex items-center gap-x-2">
@@ -89,14 +90,12 @@ function Categories({ tags }: Props) {
       </div>
 
       <div>
-        <p className="text-lg font-semibold  ">
-          Explore by Tags{" "}
-          </p>
-          <span className="text-sm text-slate-500 ">
-            There are {tags.length} tags to choose from to help you find the
-            right training for you.
-          </span>
-        
+        <p className="text-lg font-semibold  ">Explore by Tags </p>
+        <span className="text-sm text-slate-500 ">
+          There are {tags.length} tags to choose from to help you find the right
+          training for you.
+        </span>
+
         <div className="flex items-center gap-x-2 overflow-auto pb-2 pt-4">
           {tags.map((category) => (
             <button
@@ -109,7 +108,10 @@ function Categories({ tags }: Props) {
               )}
               type="button"
             >
-              <div className="truncate"> {category}</div>
+              <div className="truncate flex space-x-2 items-center">
+                <TagIcon className="h-4 w-4 text-blue-500" />
+                <span> {category}</span>
+              </div>
             </button>
           ))}
         </div>

@@ -24,7 +24,7 @@ const Page = async ({ searchParams }: SearchPageProps) => {
   const tags = await getDistinctTags();
 
   return (
-    <div className="container mx-auto py-8 space-y-2">
+    <div className="container mx-auto py-8 space-y-2 mt-8">
       <Categories tags={tags} />
       <p className="text-lg font-semibold  ">Training Sessions</p>
       <span className="text-sm text-slate-500 flex  items-center gap-x-2 ">

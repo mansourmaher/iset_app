@@ -52,9 +52,7 @@ export function SessionCard({ session }: Props) {
           <p className="text-sm mb-2 line-clamp-3">{session.description}</p>
           <div className="flex items-center space-x-2 mb-2">
             <ClockIcon className="h-4 w-4" />
-            <span className="text-sm">
-              Duration: {session.duration} minutes
-            </span>
+            <span className="text-sm">Duration: {session.duration} Hours</span>
           </div>
           <div className="flex items-center space-x-2 mb-2">
             <BookOpen className="h-4 w-4" />

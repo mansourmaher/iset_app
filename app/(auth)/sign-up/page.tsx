@@ -50,13 +50,12 @@ export default function Register() {
   });
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
-
     setError("");
     setSuccess("");
     startTransition(() => {
       register(values).then((result) => {
         setError(result?.error);
-        setSuccess(result?.succes);
+        setSuccess(result?.success);
       });
     });
   };
@@ -72,11 +71,7 @@ export default function Register() {
 
   return (
     <SlimLayout>
-      <div className="flex">
-        <Link href="/" aria-label="Home">
-          <Logo className="h-10 w-auto" />
-        </Link>
-      </div>
+      <div className="flex"></div>
       <h2 className="mt-20 text-lg font-semibold text-gray-900">
         Get started for free
       </h2>
@@ -182,7 +177,7 @@ export default function Register() {
 
               <SelectField
                 className="col-span-full"
-                label="how are you"
+                label="Select your role"
                 defaultValue={role}
                 name="role"
                 onChange={(e) => {
