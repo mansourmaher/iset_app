@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { auth } from "@/auth";
 import Navbar from "./_newCompoents/Navbar";
+import Link from "next/link";
 const categories = [
   {
     title: "Standard One",
@@ -71,8 +72,6 @@ const categories = [
 ];
 
 const Home = async () => {
-  const user = await auth();
-
   return (
     <>
       <Navbar />
@@ -90,9 +89,11 @@ const Home = async () => {
                   crystal-clear audio content, and interactive live classes to
                   ensure the best learning experience.
                 </p>
-                <Button size="lg" variant={"primary"}>
-                  Explore Classes
-                </Button>
+                <Link href={"/espace_condidat/trainings"}>
+                  <Button size="lg" variant={"primary"}>
+                    Explore
+                  </Button>
+                </Link>
               </div>
               <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
                 <div className="relative">
@@ -139,7 +140,7 @@ const Home = async () => {
             </div>
           </section>
         </div>
-        <section className="w-full py-12 md:py-24 lg:py-32  bg-gray-50">
+        {/* <section className="w-full py-12 md:py-24 lg:py-32  bg-gray-50">
           <div className="container mx-auto">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
@@ -175,8 +176,8 @@ const Home = async () => {
               ))}
             </div>
           </div>
-        </section>
-        <Faqs />
+        </section> */}
+        {/* <Faqs /> */}
       </main>
     </>
   );

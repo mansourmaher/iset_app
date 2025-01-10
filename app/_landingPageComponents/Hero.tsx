@@ -21,7 +21,7 @@ function Hero() {
                   Fourmini is a modern and responsive online learning platform
                   that provides a complete learning experience for users.
                 </p>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row mt-4 bg-gray-200 p-2 rounded">
+                {/* <div className="flex flex-col gap-2 min-[400px]:flex-row mt-4 bg-gray-200 p-2 rounded">
                   <div className="flex-1 relative">
                     <Search className="absolute left-2.5 top-3 h-4 w-4 text-gray-500 dark:text-gray-400" />
                     <Input
@@ -34,7 +34,7 @@ function Hero() {
                     Start Learning
                     <ArrowRight className="h-4 w-4" />
                   </Button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
