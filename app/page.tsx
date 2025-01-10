@@ -98,8 +98,8 @@ const Home = async () => {
               <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
                 <div className="relative">
                   <Image
-                    src="/Hero.jpg"
-                    alt="Instructor teaching"
+                    src="/hero.jpg"
+                    alt=""
                     width={600}
                     height={400}
                     className="rounded-lg"
